@@ -6,4 +6,6 @@ router.get("/", YcController.getAll);
 
 router.get("/song", YcController.getOne);
 
+router.post("/addSong", YcController.addSong);
+
 module.exports = router;

@@ -38,6 +38,52 @@ const YcController = {
       res.status(500).json({ error: -1, msg: "Internal Server Error!" });
     }
   },
+
+  addSong: async (req, res) => {
+    const {
+      encodeId,
+      title,
+      artistsNames,
+      duration,
+      link_mp3,
+      releaseDate,
+      thumbnail,
+      thumbnailM,
+    } = req.body;
+
+    if (
+      !encodeId ||
+      !title ||
+      !artistsNames ||
+      !duration ||
+      !link_mp3 ||
+      !releaseDate ||
+      !thumbnail ||
+      !thumbnailM
+    ) {
+      return res.status(400).json({ error: -1, msg: "Không đủ thông tin" });
+    }
+
+    try {
+      const newSong = await songModel({
+        encodeId,
+        title,
+        artistsNames,
+        duration,
+        link_mp3,
+        releaseDate,
+        thumbnail,
+        thumbnailM,
+      });
+
+      await newSong.save();
+
+      res.json({ msg: "Success", data: newSong });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: -1, msg: "Internal Server Error!" });
+    }
+  },
 };
 
 module.exports = YcController;
