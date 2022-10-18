@@ -1,10 +1,10 @@
-const fs = require("fs");
+const musicFileModel = require("../models/musicFileModel");
 const songModel = require("../models/songModel");
 
 const YcController = {
   getAll: async (req, res) => {
     try {
-      const songs = await songModel.find({});
+      const songs = await songModel.find();
 
       res.json({
         msg: "Success",
@@ -33,6 +33,34 @@ const YcController = {
       }
 
       return res.json({ msg: "Success", data: song });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: -1, msg: "Internal Server Error!" });
+    }
+  },
+
+  getFileMusic: async (req, res) => {
+    const { id } = req.query;
+
+    if (!id) {
+      return res.status(400).json({ error: -1, msg: "Bad Request!" });
+    }
+
+    try {
+      const fileMp3 = await musicFileModel.findOne({ encodeId: id });
+
+      if (!fileMp3) {
+        return res.status(200).json({
+          error: -1,
+          msg: "Không tìm thấy bài hát này.",
+        });
+      }
+
+      res.json({
+        error: 0,
+        msg: "Success",
+        data: fileMp3.data,
+      });
     } catch (error) {
       console.log(error);
       res.status(500).json({ error: -1, msg: "Internal Server Error!" });

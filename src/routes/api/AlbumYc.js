@@ -4,8 +4,11 @@ const router = express.Router();
 
 router.get("/", YcController.getAll);
 
-router.get("/song", YcController.getOne);
+router.get("/songInfo", YcController.getOne);
 
+router.get("/song", YcController.getFileMusic);
+
+// route post
 router.post("/addSong", YcController.addSong);
 
 module.exports = router;
