@@ -31,10 +31,6 @@ const SongModel = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    link_mp3: {
-      type: String,
-      required: true,
-    },
   },
   {
     versionKey: false,
