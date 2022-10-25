@@ -98,13 +98,21 @@ const YcController = {
         title,
         artistsNames,
         duration,
-        link_mp3,
         releaseDate,
         thumbnail,
         thumbnailM,
       });
 
+      const newFile = await musicFileModel({
+        encodeId,
+        data: {
+          128: link_mp3,
+          321: "",
+        },
+      });
+
       await newSong.save();
+      await newFile.save();
 
       res.json({ msg: "Success", data: newSong });
     } catch (error) {
